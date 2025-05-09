@@ -96,8 +96,9 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-  //uint32_t Pulse = 50 ;
+  
   TIM2->CCR1 = 800;
+  //either use this or we can use directly HAL api __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 800); in while(1)
   /* USER CODE END 2 */
 
   /* Infinite loop */
