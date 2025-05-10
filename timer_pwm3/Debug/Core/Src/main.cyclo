@@ -1,0 +1,9 @@
+../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_bus.h:539:22:LL_AHB2_GRP1_EnableClock	1
+../Core/Src/main.c:67:6:HAL_TIM_IC_CaptureCallback	3
+../Core/Src/main.c:89:5:main	1
+../Core/Src/main.c:142:6:SystemClock_Config	3
+../Core/Src/main.c:186:6:PeriphCommonClock_Config	2
+../Core/Src/main.c:210:13:MX_TIM2_Init	8
+../Core/Src/main.c:284:13:MX_TIM16_Init	5
+../Core/Src/main.c:347:13:MX_GPIO_Init	1
+../Core/Src/main.c:368:6:Error_Handler	1
