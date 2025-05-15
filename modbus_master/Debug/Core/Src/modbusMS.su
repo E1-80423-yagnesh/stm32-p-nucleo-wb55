@@ -1,0 +1,4 @@
+../Core/Src/modbusMS.c:43:6:ModbusInit	8	static
+../Core/Src/modbusMS.c:282:6:TransmitModbusMaster	16	static
+../Core/Src/modbusMS.c:352:6:ModbusMasterProcessReceivedResponse	16	static
+../Core/Src/modbusMS.c:497:6:CalculateCrc	24	static

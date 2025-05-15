@@ -1,0 +1,2 @@
+../Core/Src/modbus.c:48:6:ModbusSlaveProcessReceivedQuery	24	static
+../Core/Src/modbus.c:184:6:CalculateCrcSlave	24	static
