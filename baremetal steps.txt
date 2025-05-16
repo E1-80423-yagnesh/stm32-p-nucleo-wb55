@@ -1,0 +1,18 @@
+go to ST.com --->seach STM32WB --- > Tools and software ---> stm32 cube WB  -->get software
+
+right click on the project you created -->properties ---> c/c++ general ---> paths/symbol 
+
+delete everything except drivers
+drivers --> remove HAL 
+
+
+STM32 cube IDE:
+right click on the project you created -->properties ---> c/c++ general ---> paths/symbol 
+ADD this two:
+
+
+
+C:\Users\RND127\STM32Cube\Repository\STM32Cube_FW_WB_V1.20.0\Drivers\CMSIS\Device\ST\STM32WBxx\Include 
+
+C:\Users\RND127\STM32Cube\Repository\STM32Cube_FW_WB_V1.20.0\Drivers\CMSIS\Include
+

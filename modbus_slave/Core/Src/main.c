@@ -58,6 +58,20 @@ static void MX_USART1_UART_Init(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
+//
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if(huart->Instance == huart1.Instance) // Using UART1 for RS485
+    {
+        // Set RS485 back to receive mode after transmission complete
+        //HAL_GPIO_WritePin(RS485_EN_PORT, RS485_EN_PIN, GPIO_PIN_RESET);
+
+        // Re-enable reception for the next message
+        HAL_UART_Receive_IT(&huart1, (uint8_t*)rx_buffer, 1);
+    }
+}
+
+
 /* USER CODE BEGIN 0 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
@@ -108,7 +122,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                 ModbusSlaveProcessReceivedQuery();
 
                 // Set RS485 to transmit mode (if needed)
-                //HAL_GPIO_WritePin(RS485_EN_PORT, RS485_EN_PIN, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(RS485_EN_PORT, RS485_EN_PIN, GPIO_PIN_SET);
 
                 // Transmit the response
                 HAL_UART_Transmit_IT(&huart1, (uint8_t*)gModbusSlaveData.modbusFrame, gModbusSlaveData.totalTxValue);
@@ -157,6 +171,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
+  ModbusSlaveInit();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -167,6 +182,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
+	HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -176,6 +192,28 @@ int main(void)
   * @brief System Clock Configuration
   * @retval None
   */
+
+void ModbusSlaveInit(void)
+{
+    // Initialize Modbus slave data structure
+    gModbusSlaveData.address = SLAVE_ID;  // Set device address
+    gModbusSlaveData.rxPointer = 0;       // Reset receive pointer
+    gModbusSlaveData.totalTxValue = 0;    // Reset transmit counter
+    gModbusSlaveData.totalRxValue = 0;    // Reset receive counter
+    gModbusSlaveData.flags.all = 0;       // Clear all flags
+
+    // Initialize holding registers with default values if needed
+    for(uint16_t i = 0; i < (MBUS_FRAME_BUFFER_SIZE>>1); i++)
+    {
+        gModbusSlaveData.modbusHoldingRegister[i] = 0;
+    }
+
+    // Initialize the frame buffer
+    for(uint16_t i = 0; i < MBUS_FRAME_BUFFER_SIZE+5; i++)
+    {
+        gModbusSlaveData.modbusFrame[i] = 0;
+    }
+}
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
