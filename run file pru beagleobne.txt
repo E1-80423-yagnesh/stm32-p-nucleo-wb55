@@ -1,0 +1,15 @@
+config-pin <pin<mode> //to set pin mode
+
+config-pin -l <pin> //all modes available
+
+config-pin -q <pin> //to check current mode
+
+sudo -E make
+
+sudo cp gen/pru.out /lib/firmware/am335x-pru0-fw
+
+cd /sys/class/remoteproc/remoteproc1
+
+echo stop>state
+
+echo start>state

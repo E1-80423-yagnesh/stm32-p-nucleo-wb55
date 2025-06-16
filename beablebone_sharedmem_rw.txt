@@ -1,0 +1,57 @@
+//to write data in shared memory
+//pru_ddr_write.c
+
+#include <stdint.h>
+#include <pru_cfg.h>
+#include "resource_table_empty.h"
+
+#define SHARED_MEM_ADDR  ((volatile uint32_t *) 0x00010000)
+
+void main(void) {
+    // Example pattern write to shared memory
+    int i;
+    for (i = 0; i < 8; i++) {
+        SHARED_MEM_ADDR[i] = 0x00 + i;  // Writes 0xA0, 0xA1, ..., 0xA7
+    }
+
+    __halt();
+}
+
+//to read data from shared memory
+//read_ddr.c
+#include <stdio.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+#include <unistd.h>
+#include <stdint.h>
+
+#define PRU_SHARED_MEM_PHYS 0x4A310000  // L3 address mapped by Linux
+#define MAP_SIZE            0x3000      // 12KB shared memory size
+#define NUM_WORDS           8
+
+int main() {
+    int fd = open("/dev/mem", O_RDONLY | O_SYNC);
+    if (fd < 0) {
+        perror("open");
+        return 1;
+    }
+
+    void *map_base = mmap(NULL, MAP_SIZE, PROT_READ, MAP_SHARED, fd, PRU_SHARED_MEM_PHYS);
+    if (map_base == MAP_FAILED) {
+        perror("mmap");
+        close(fd);
+        return 1;
+    }
+
+    volatile uint32_t *shared_mem = (volatile uint32_t *)map_base;
+
+    printf("Reading from PRU shared memory:\n");
+    printf("===============================\n");
+    for (int i = 0; i < NUM_WORDS; i++) {
+        printf("SharedMem[%d] = 0x%X\n", i, shared_mem[i]);
+    }
+
+    munmap((void *)map_base, MAP_SIZE);
+    close(fd);
+    return 0;
+}
