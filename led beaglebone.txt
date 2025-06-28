@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <unistd.h>  // for sleep()
+
+int main() {
+    FILE *fp;
+
+    // Configure LED to be manually controlled
+    fp = fopen("/sys/class/leds/beaglebone:green:usr3/trigger", "w");
+    if (fp == NULL) {
+        perror("Error opening trigger file");
+        return 1;
+    }
+    fprintf(fp, "none");
+    fclose(fp);
+
+    // Blink loop
+    while (1) {
+        // Turn LED on
+        fp = fopen("/sys/class/leds/beaglebone:green:usr3/brightness", "w");
+        if (fp != NULL) {
+            fprintf(fp, "1");
+            fclose(fp);
+        }
+
+        sleep(2);
+
+        // Turn LED off
+        fp = fopen("/sys/class/leds/beaglebone:green:usr3/brightness", "w");
+        if (fp != NULL) {
+            fprintf(fp, "0");
+            fclose(fp);
+        }
+
+        sleep(2);
+    }
+
+    return 0;
+}
