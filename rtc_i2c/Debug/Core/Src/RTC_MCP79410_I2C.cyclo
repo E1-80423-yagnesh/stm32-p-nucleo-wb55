@@ -1,5 +1,0 @@
-../Core/Src/RTC_MCP79410_I2C.c:48:6:WriteRtcByte	1
-../Core/Src/RTC_MCP79410_I2C.c:64:9:ReadRtcByte	1
-../Core/Src/RTC_MCP79410_I2C.c:120:6:InitRtc	1
-../Core/Src/RTC_MCP79410_I2C.c:164:6:GetTimeToRtcHmsAscii	4
-../Core/Src/RTC_MCP79410_I2C.c:212:6:GetDateToRtcHmsAscii	1
