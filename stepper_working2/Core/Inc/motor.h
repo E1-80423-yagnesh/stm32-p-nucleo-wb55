@@ -110,6 +110,7 @@ void enableStealthMode(void);
 void microsecond_delay(uint16_t microseconds);
 
 
+
 // UART communication functions
 uint8_t calculateCRC(uint8_t *data, uint8_t length);
 void TMC2226_WriteRegister(uint8_t reg, uint32_t value);

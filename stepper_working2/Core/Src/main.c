@@ -21,11 +21,12 @@
 #include "motor.h"
 #include "spectrum.h"
 #include <stdio.h>
-
+#include <string.h>
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 uint16_t currentState = 255;
 uint8_t uartRxBuffer[1];
+int case2step = 343;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -67,6 +68,7 @@ static void MX_UART4_Init(void);
 static void MX_UART5_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_TIM16_Init(void);
+void DWT_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -133,6 +135,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	setupSensor();
 	setupMotor();
+
+	uint8_t flag = 0;
+
 	HAL_UART_Receive_IT(&huart4, uartRxBuffer, 1);  // Start UART interrupt
 
   /* USER CODE END 2 */
@@ -143,30 +148,34 @@ int main(void)
 
 		switch (currentState) {
 		        case 0:
+
 		        	lampOff();
 		        	while(currentState == 0){
 
 		            homePosition();
 		        	}
-		        	printf("Home position reached.");
+
 		            currentState = 255;
+		            flag = 0;
 		           // HAL_Delay(1000);
 		            break;
 
 
 		        case 1:
+
 		            lampOn();
 		           // while(currentState == 1){
 		                rotateMotor(5100, 1);
 		           // }
 		            printf("Scan Initialized\r\n");
 		            currentState = 255;
-
+		           flag = 0;
 		            //HAL_Delay(1000);
 		            break;
 
 		        case 2:
-		        	 while(currentState == 2 ){
+
+		        	// while(currentState == 2 ){
 		            printf("Taking Scan\r\n");
 		            for (int stage = 0; stage < 14; stage++) {
 		            	 if (currentState != 2)
@@ -174,34 +183,45 @@ int main(void)
 		            		 currentState = 255;
 							break;
 		            	 }
-		                rotateMotor(343, 1);
+		                rotateMotor(case2step, 1);
 
 		                for (int scan = 0; scan < 3; scan++) {
 		                    printf("Scan %d_%d\r\n", stage + 1, scan + 1);
 		                    acquireSpectra();
 		                    for (int channel = 0; channel < CHANNELS; channel++) {
 		                        printf("Channel %d: %d\r\n", channel, spectra[channel]);
+
 		                    }
 		                    HAL_Delay(1000);
 		                }
 		            }
-		        	 }
+		        	// }
 		            printf("Scan Finished\r\n");
 		            currentState = 255;
+		            flag = 0;
 
 		            break;
 
 		        case 3:
+
 		            lampOff();
 		            //while(currentState == 3){
 		            rotateMotor(9555, 0);
 		            printf("Sample Discarded\r\n");
 		            //}
 		            currentState = 255;
+		            flag = 0;
 		            break;
 
+		        case 255:
+		        	break;
+
 		        default:
-		            currentState = 255;
+
+		        	printf("Invalid input! Please enter 0, 1, 2, or 3\r\n");
+		        	flag = 1;
+
+		        	currentState = 255;
 		            break;
 		    }
 
@@ -216,6 +236,9 @@ int main(void)
 
   /* USER CODE END 3 */
 }
+
+
+
 
 /**
   * @brief System Clock Configuration

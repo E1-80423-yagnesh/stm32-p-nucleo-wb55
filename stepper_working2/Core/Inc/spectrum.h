@@ -56,6 +56,6 @@ void acquireSpectra(void);
 uint16_t readExternalADC(void);
 HAL_StatusTypeDef enableBuffers(void);
 uint8_t waitForEOS(void);  // Function to wait for End of Scan signal
-
+void initializeADC1115(void);
 
 #endif

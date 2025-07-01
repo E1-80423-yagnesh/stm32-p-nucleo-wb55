@@ -48,6 +48,9 @@ void setupSensor(void)
     // Enable buffers first
     enableBuffers();
 
+    //initialize adc
+    initializeADC1115();
+
     // ST pin as OUTPUT, initially HIGH
     HAL_GPIO_WritePin(ST_PORT, ST_PIN, GPIO_PIN_SET);
 
@@ -58,7 +61,18 @@ void setupSensor(void)
     dataAvailable = 0;
     packetIndex = 0;
     initialized = 1;
-    printf("Spectrum sensor initialized\r\n");
+
+}
+
+void initializeADC1115(void)
+{
+
+    // Initialize ADS1115 with I2C parameters
+    ADS1115(&i2c, &hi2c1, ADS_ADDR_GND);
+
+    // Set gain
+    ADSsetGain(&i2c, GAIN_ONE);
+
 }
 
 uint16_t readADC1115(void)
@@ -67,8 +81,6 @@ uint16_t readADC1115(void)
 
     uint16_t adcValue = 0;
 
-    ADS1115(&i2c, &hi2c1, ADS_ADDR_GND);
-    ADSsetGain(&i2c, GAIN_ONE);
     // Read 2 bytes from ADC
     adcValue = ADSreadADC_SingleEnded(&i2c, 1);
 
@@ -149,4 +161,40 @@ void acquireSpectra(void)
     packetIndex = 0;
 
     printf("Spectra acquisition complete - %d pixels read\r\n", pixelread);
+}
+
+
+void triggerAndReceiveSpectra(void)
+{
+    //1. Send trigger command 'S' to slave device
+    char command = 'S';
+    HAL_StatusTypeDef status;
+
+    printf("Sending trigger command 'S'\r\n");
+
+    // Send command via I2C to slave device
+    status = HAL_I2C_Master_Transmit(&hi2c1, ADS_ADDR_GND << 1, (uint8_t*)&command, 1, HAL_MAX_DELAY);
+
+    if (status != HAL_OK) {
+        printf("Error: Failed to send trigger command\r\n");
+        return;
+    }
+
+    //2.wait for 0.5 second
+    HAL_Delay(500); // 0.5 sec delay
+
+    //3.
+    acquireSpectra();
+
+    //4. Read and print spectra data
+    for(int channel = 0; channel < CHANNELS; channel++)
+    {
+	   printf("Channel %d: %d\r\n", channel, spectra[channel]);
+    }
+
+   //5. Waits 1 second before allowing the next acquisition
+
+    HAL_Delay(1000); // 1 sec delay
+
+
 }
