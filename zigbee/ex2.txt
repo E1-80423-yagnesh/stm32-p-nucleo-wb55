@@ -1,0 +1,55 @@
+//esp32 as a station
+
+#include "Wifi.h"
+
+void setup()
+{
+
+ Serial.begin(115200);
+ 
+ //set wifi to station mode disconnect to an Ap if previously connected
+ WiFi.mode(WIFI_STA);
+ WiFi.disconnect();
+ delay(100);
+
+ serial.println("Setup done");
+}
+
+
+void loop()
+{
+  
+ Serial.println("scan start");
+ 
+ //WiFi.scanNetworks will return the number of networks found
+ int n = WiFi.scanNetworks();
+ Serial.println("scan done");
+ if (n == 0)
+ {
+   Serial.println("no networks found");
+ }
+
+ else
+ {
+
+  Serial.print(n);
+  Serial.println("network found");
+  for (int i=0; i < n ;i++){
+  
+  //print SSID and RSSI for each network found
+  Serial.print(i + 1);
+  Serial.print(": ");
+  Serial.print(WiFi.SSID(i));
+  Serial.print("(");  
+  Serial.print(WiFi.RSSI(i));
+  Serial.print(")"); 
+  Serial.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN)?" " : "*" );
+  delay(10);
+  }
+}
+
+
+
+
+
+}

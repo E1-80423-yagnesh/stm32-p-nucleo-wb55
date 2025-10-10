@@ -1,0 +1,12 @@
+Boot modes
+ At startup, BOOT0 pin and BOOT1 option bit are used to select one of three boot options:
+ • Boot from user flash memory
+ • Boot from system memory
+ • Boot from embedded SRAM
+
+ The default state of BOOT0 is LOW
+
+  boot 1  boot0
+   x        0          Main Flash memory is selected as boot area
+   0        1          System memory is selected as boot area
+   1        1          Embedded SRAM1 is selected as boot area

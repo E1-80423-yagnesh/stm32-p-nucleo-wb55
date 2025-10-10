@@ -1,0 +1,282 @@
+Name	Airtel Internet
+APN	airtelgprs.com
+Server	www.airtel.in
+APN Type	default
+APN Protocol	IPv4/IPv6
+
+
+
+
+
+
+
+
+1)In order to turn ON this Click board™, the user has to press the onboard push-button labeled as 
+PWRKEY down for a period longer at least 500ms, which represents the Ignition (Power-On) button.
+
+
+2) It supports automatic baud rate detection, operates at 115200 bps by default configuration, 
+and is used for data transmission and exchanging AT commands with the host MCU.
+
+
+USIM Interface : Support 1.8V USIM card 
+
+
+3)pin definitions
+
+
+
+BC66-NA is equipped with a total of 58 pins, including 44 LCC pins and 14 LGA pins
+
+
+
+AT+CREG?      → Query network registration status
+
+| stat     | Meaning                                             
+| -------- | --------------------------------------------------- 
+| 0        | Not registered, not searching for network           
+| 1        | Registered, home network                           
+| 2        | Not registered, but currently searching for network 
+| 3        | Registration denied                                
+| 4        | Unknown (e.g., out of coverage)                     
+| 5        | Registered, roaming   
+                           
+
+
+AT+CGATT?
+
++CGATT: 1 → Attached to the packet domain (ready to send/receive data) 
+
++CGATT: 0 → Not attached 
+
+
+
+
+
+AT+QRST=1 --->   reboot the module and reload settings.
+
+AT+QCCID ---->   USIM CARD identifacation
+
+
+
+
+AT+CTZU=1  ---->  Enable automatic time zone update
+
+AT+CCLK=1  ---->  Get current time
+
+AT+QCCLK   ---->  set and get current date time and UTC
+
+
+AT+CGSN=1 ------> for reqeusting imei no
+
+OK 
+
+AT+CSQ   -------> signal strengh
+
+
+
+LISt of TCP/IP command:
+Table 2: List of TCP/IP Related AT Commands 
+ 
+    AT Command      Description 
+[1] AT+QIOPEN       Open a Socket Service      *
+[2] AT+QICLOSE      Close a Socket Service     *
+[3] AT+QISTATE      Query Socket Service Status 
+[4] AT+QISEND       Send Hex/Text String Data  *
+[5] AT+QIRD         Retrieve the Received TCP/IP Data 
+[6] AT+QISENDEX     Send Hex String Data 
+[7] AT+QISWTMD      Switch Data Access Modes 
+[8] AT+QPING        Ping a Remote Server 
+[9] AT+QNTP         Synchronize Local Time through NTP Server 
+[10] AT+QIDNSGIP    Get IP Address by Domain Name 
+[11] AT+QIDNSCFG    Configure DNS Server Address 
+[12] AT+QICFG       Configure Optional Parameters 
+[13] AT+QIGETERROR  Query the Last Error Code 
+
+
+List of SSL Related AT Commands 
+
+[1] AT+QSSLCFG       Configure Parameters of an SSL Context 
+[2] AT+QSSLOPEN      Open an SSL Socket to Connect a Remote Server 
+[3] AT+QSSLSEND      Send Data through SSL Connection 
+[4] AT+QSSLCLOSE     Close an SSL Connection 
+
+
+
+
+
+
+AT
+AT
+
+OK
+AT+CSQ
+AT+CSQ
+
++CSQ: 0,0
+
+OK
+AT+CGSN
+AT+CGSN
+
+MPA23CO090038100P
+
+OK
+AT+CPIN?
+AT+CPIN?
+
++CPIN: READY
+
+AT+IPR=?
+AT+IPR=?
+
++IPR: (4800,9600,115200),(0,110,300,1200,2400,4800,9600,19200,38400,57600,115200,230400,460800,921600)
+
+OK
+
+OK
+AT+QCCID
+AT+QCCID
+
++QCCID: 8991000923185882458F
+
+OK
+AT+CGMM
+AT+CGMM
+
+Quectel_BC66
+
+OK
+AT+CSCON
+AT+CSCON
+
+ERROR
+AT+CCLK
+AT+CCLK
+
+ERROR
+AT+CEREG
+AT+CEREG
+
+ERROR
+AT+CGATT
+AT+CGATT
+
+ERROR
+AT+CIMI
+AT+CIMI
+
+404980528934952
+
+OK
+AT+CEREG
+AT+CEREG
+
+ERROR
+AT+CEREG?
+AT+CEREG?
+
++CEREG: 0,0
+
+OK
+AT+CSQ
+AT+CSQ
+
++CSQ: 0,0
+
+OK
+AT+COPS?
+AT+COPS?
+
++COPS: 0
+
+OK
+AT+CGATT?
+AT+CGATT?
+
++CGATT: 0
+
+OK
+AT+QCFG?
+AT+QCFG?
+
++QCFG: "epco",1
++QCFG: "combinedattach",1
++QCFG: "up",0
++QCFG: "upopt",0
++QCFG: "multidrb",0
++QCFG: "autopdn",1
++QCFG: "ripin",1
++QCFG: "initlocktime",10
++QCFG: "dsevent",0
++QCFG: "atlocktime",10
++QCFG: "urc/ri/mask",NULL
++QCFG: "vbattimes",10
++QCFG: "activetimer",1
+
+OK
+AT+QBAND?
+AT+QBAND?
+
++QBAND: 20
+
+OK
+AT+CSQ
+AT+CSQ
+
++CSQ: 0,0
+
+OK
+AT+CEREG?
+AT+CEREG?
+
++CEREG: 0,0
+
+OK
+AT+QBAND=1,3,5,8,20
+AT+QBAND=1,3,5,8,20
+
+ERROR
+AT+QBAND=1,8
+AT+QBAND=1,8
+
+
+OK
+AT+NRB
+AT+NRB
+
+ERROR
+AT+QBAND=1,20
+AT+QBAND=1,20
+
+
+OK
+AT+CGPADDR=1
+AT+CGPADDR=1
+
+OK
+AT+CCLK
+AT+CCLK
+
+ERROR
+AT+QCCLK
+AT+QCCLK
+
+ERROR
+ATI
+ATI
+
+Quectel_Ltd
+Quectel_BC66
+Revision: BC66NBR01A11
+
+OK
+
+AT+QCGDEFCONT="IP","airtelgprs.com"
+AT+QCGDEFCONT="IP","airtelgprs.com"
+
+
+
+
+
+

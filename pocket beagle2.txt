@@ -1,0 +1,56 @@
+https://docs.beagle.cc/boards/pocketbeagle-2/04-expansion.html#pocketbeagle-2-expansion
+
+PR0_PRU0_GPO0  --->  P1.19 , P1.36  
+
+PR0_PRU0_GPO1  --->  P1.34,  P1.33A
+
+PR0_PRU0_GPO2  --->  P1.27,  P2.32
+
+PR0_PRU0_GPO3  --->  P1.25,  P2.30
+
+PR0_PRU0_GPO4  --->  P1.23,  P1.31
+
+PR0_PRU0_GPO5  --->  P2.34
+
+PR0_PRU0_GPO6  --->  P2.28
+
+PR0_PRU0_GPO7  --->  P1.29
+
+PR0_PRU0_GPO8  --->  P2.02
+
+PR0_PRU0_GPO9  --->  P2.04
+
+PR0_PRU0_GPO10 --->  P2.06
+
+PR0_PRU0_GPO11 --->  P2.08
+
+PR0_PRU0_GPO12 --->  P2.20
+
+PR0_PRU0_GPO13 --->  P1.20,  P1.13      ///////////
+
+PR0_PRU0_GPO14 --->  P2.24
+
+PR0_PRU0_GPO15 --->  P2.33
+
+PR0_PRU0_GPO16 --->  P2.35,  P2.29A,  P1.21
+
+PR0_PRU0_GPO17 --->  P2.18
+
+PR0_PRU0_GPO18 --->  P2.22     
+
+PR0_PRU0_GPO19 --->  P1.28,  P2.17                
+
+  
+
+
+
+ 
+
+
+
+
+
+
+
+
+

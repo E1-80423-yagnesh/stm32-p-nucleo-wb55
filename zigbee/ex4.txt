@@ -1,0 +1,131 @@
+//ESP32 as a wifi STA
+
+/*
+output:
+
+paste 192.168.4.1 in chrome // my  pc IP
+
+we get 
+two line 
+click here to turn ON LED
+click here to turn OFF LED
+
+by clicking this link we trun on and off led 
+*/
+
+
+#include <WiFi.h>
+
+
+#define led 2 //set the GPIO where you connected your led
+
+//set ssid,password we can eliminate password parameter if we want AP to be open
+
+const char *ssid = "yourAP";
+const char *password = "yourPassword";
+
+
+WiFiServer server(80);
+
+void setup()
+{
+  Serial.begin(115200);
+  pinMode(led,OUTPUT);
+
+  Serial.println();
+  Serial.println();
+  Serial.print("connecting to ");
+  Serial.println(ssid);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED){
+     delay(500);
+     Serial.print("");
+  }
+  
+  Serial.println("");
+  Serial.println("WiFi connected.");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+  
+  
+
+  server.begin();
+
+  Serial.println("Server started");
+
+}
+
+
+void loop()
+{
+
+  WiFiClient client = server.available();   //1.listen for incoming clients
+
+  if (client)      //2.if you get a client
+  {
+    Serial.println("New Client. ");    //print a message out the serial port 
+    string currentLine = "";   //make a String to hold incoming data from the client
+   
+    while(client.connected()){  //3.loop while the client's connected
+    
+      if(client.available()) {  //if there's bytes toread from the client
+        
+        char c = client.read(); //4.read a byte, then
+        Serial.write(c);   //print it out the serial monitor
+       
+        if(c == "\n") {  //if the byte is a new line character
+        
+        //if the current line is balnk , you got two newlne characters in row
+        //that's the end of the client HTTP request ,so send a response
+        if(currentline.length() == 0)
+        {
+         
+         //HTTP headers always start with a response code (eg. HTTP/1.1 200 OK)
+         //and a content type so the client knows whats coming, then a blank line:
+         client.println("HTTP/1.1. 200 OK");
+         client.println("Content-type:text/html");
+         client.println();
+
+         //the content of the HTTP response follows the header
+         client.print("Click <a href=\"/H\ ">here</a> to turn ON the LED. <br>");
+         client.print("Click <a href=\"/H\ ">here</a> to turn OFF the LED. <br>");
+
+         //The HTTP response ends with another blank line:
+         cleint.println();
+         //break out of the while loop:
+         break;
+        }
+        else  // if you got a newline, then clear currentLine:
+        {
+          currentLine = "";
+        }
+
+        elseif(c != '\r"){ // if you got anything else but a carriage return char
+        currnetLine += c;  //add it to the end of currentLine
+        }
+
+        //check to see if the client request was "GET /H" or "GET /L" :
+        if (currentLine.endsWith("GET /H"))
+        {
+          digitalWrite(LED,HIGH);   //GET /H turns the LED on
+        } 
+         
+          
+
+
+        
+
+
+
+ 
+
+      
+
+
+
+    
+
+
+}

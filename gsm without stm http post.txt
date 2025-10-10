@@ -1,0 +1,57 @@
+
+AT+SAPBR=3,1,"CONTYPE","GPRS"
+
+OK
+AT+SAPBR=3,1,"APN","internet" 
+
+OK
+AT+SAPBR=1,1
+
+OK
+AT+SAPBR=2,1
+
++SAPBR: 1,1,"100.67.120.72"
+
+OK
+AT+HTTPINIT
+
+OK
+AT+HTTPPARA="CID",1
+
+OK
+AT+HTTPPARA="URL","http://13.200.208.139/api/test"
+
+OK
+AT+HTTPPARA="CONTENT","application/json"
+
+OK
+AT+HTTPDATA=16,1000
+
+DOWNLOAD
+{"msg":"hello"}  
+OK
+
+AT+HTTPACTION=1
+
+OK
+
++HTTPACTION: 1,200,123
+
+
+AT+HTTPDATA=16,1000
+
+The AT+HTTPDATA=<length>,<timeout> command tells the GSM module:
+
+<length> → How many bytes of data you’re going to send in the HTTP POST body.
+
+<timeout> → How long (in milliseconds) the module should wait for you to send the data.
+
+Tells the module you want to send 16 bytes of HTTP POST data.
+
+16 = length of data in bytes.
+
+1000 = maximum time in milliseconds (1 second) allowed for you to finish sending the data.
+
+DOWNLOAD
+
+The module responds with DOWNLOAD when it’s ready for you to send the data.

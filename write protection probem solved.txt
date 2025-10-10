@@ -1,0 +1,5 @@
+1)STM32Cube programmer ---> option byte--> Readout rptection ---> AA
+
+2) got to erase and programming ---> mass chip erase
+
+3) if successfull you can now disconnect and and upload your program

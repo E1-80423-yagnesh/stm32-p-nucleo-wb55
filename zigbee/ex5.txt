@@ -1,0 +1,39 @@
+//By Evandro Copercini -2018
+
+//This example creates a bridge between Serial and classical Bluetooth (SPP)
+//and alos demostrate that SerialBT have the same functionalities of a normal Serial
+
+//output : any thing we type in serial monitor will be transmitted to bluetooth device(download serial terminal on 
+  andriod device and connect to ESP32test) 
+  anything snd from bluetooth device send  serial terminal
+
+
+#include "BluetoothSerial.h"
+
+#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEROID_ENABLED)
+#error Bluetooth is not enabled! Please run 'make menuconfig' to and enable it
+#endif
+
+Bluetoothserial SerialBT;
+
+
+void setup()
+{
+
+  Serial.begin(115200);
+  SerialBT.begin("ESP32test");//Bluetooth device name
+  Serial.println("The device started, now you can pair it with bluetooth!");
+}
+
+
+void loop()
+{
+   if (Serial.available()) {
+     SerialBT.write(Serial.read());
+   }
+   if(SerialBT.avaialble()) {
+    Serial.write(SerialBT.read());
+   }
+  delay(20);   
+
+}
