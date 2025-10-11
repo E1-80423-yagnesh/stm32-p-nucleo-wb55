@@ -48,6 +48,16 @@ Tools--->Board--->Board manager--->ESP32 install
 Tools > Board > ESP32 Arduino >ESP32C6 Dev Module
 
 
+To upload code:
+
+---> connect Tx-Rx,Rx-Tx,GND-GND, 3.3v-3.3v
+
+---> press "->"
+     wait for connecting once come press and release together IOO and reset quickly(1 sec)
+
+---> code uploaded
+
+
 
 
 
@@ -79,6 +89,17 @@ ESP32 Bluetooth
 
 --> can act as a client or as a server
   
+
+ESP32 zigbee
+ 
+1)Tools --zigbee mode--Zigbee zczr
+
+2) Tools -- partition scheme --->zigbee zczr 4mb with spiffs 
+
+3)programmer -- ESPtool
+
+4) upload speed -- 115200
+
 
 
 

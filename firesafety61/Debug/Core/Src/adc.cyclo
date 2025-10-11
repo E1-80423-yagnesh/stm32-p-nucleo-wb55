@@ -1,0 +1,7 @@
+../Core/Src/adc.c:23:6:ADC_Process_Conversion_Complete	1
+../Core/Src/adc.c:44:6:ADC_Process_Timer_Interrupt	5
+../Core/Src/adc.c:89:9:Check_Percentage_Threshold_With_Hysteresis	5
+../Core/Src/adc.c:112:9:Check_Percentage_Threshold	1
+../Core/Src/adc.c:118:6:Check_Fast_Channels_A0_A9	5
+../Core/Src/adc.c:152:6:Check_Slow_Channels_A10_A15	7
+../Core/Src/adc.c:211:6:Update_Refresh_Rate_From_Flags	13
