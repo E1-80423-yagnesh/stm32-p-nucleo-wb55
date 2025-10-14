@@ -1,0 +1,78 @@
+TIM1
+
+CH1    PA8  23(D7)  TP19 
+CH1N   PA7  15(D11) TP20
+
+CH2    PA9  21(D8)  TP24
+CH2N   PB0  34(A3)  TP22
+
+
+Step Size to Frequency Calculation:
+
+Timer Configuration Analysis:
+
+Your timer setup:
+
+- System Clock: 50 MHz (from PLL: MSI 4MHz × 25/2 = 50MHz)
+- Prescaler: 0 (so divider = 0+1 = 1)
+- Period (ARR): 4999
+- Timer Interrupt Frequency: 50MHz ÷ 1 ÷ 5000 = 10,000 Hz
+
+This means your HAL_TIM_PeriodElapsedCallback() function is called 10,000 times per second.
+
+How One Complete Triangular Wave Cycle Works
+
+For each channel, one complete triangular cycle involves:
+
+1. Rising edge: CCR goes from 0 → 4999
+2. Falling edge: CCR goes from 4999 → 0
+
+With step = 1:
+
+- Rising: 0, 1, 2, 3, ..., 4999 = 4999 interrupts
+- Falling: 4999, 4998, 4997, ..., 0 = 4999 interrupts
+- Total interrupts per cycle: 4999 + 4999 = 9998 interrupts
+
+Time per cycle: 9998 ÷ 10,000 = 0.9998 seconds ≈ 1 second
+Frequency: 1 ÷ 1 = 1 Hz
+
+With step = 15:
+
+- Rising: 0, 15, 30, 45, ..., 4995 = 333 interrupts(4995÷15 = 333)
+- Note: Actually reaches 4995, not exactly 4999, but close enough
+- Falling: 4995, 4980, 4965, ..., 0 = 333 interrupts
+- Total interrupts per cycle: 333 + 333 = 666 interrupts
+
+Time per cycle: 666 ÷ 10,000 = 0.0666 seconds
+Frequency: 1 ÷ 0.0666 = 15 Hz per channel
+
+Why You Get 30Hz Total:
+
+Your code alternates between two channels:
+- Channel 1: 15 Hz triangular wave
+- Channel 2: 15 Hz triangular wave
+- Combined output: You see a triangular wave every 1/(15×2) = 30 Hz
+
+General Formula:
+
+Frequency = Timer_Frequency × Step ÷ (2 × Period)
+
+Where:
+- Timer_Frequency = 10,000 Hz
+- Step = your step size
+- Period = 4999 (approximately 5000)
+- Factor of 2 accounts for up AND down ramp
+
+Examples:
+- step = 1: 10,000 × 1 ÷ (2 × 5000) = 1 Hz per channel → 2 Hz total
+- step = 15: 10,000 × 15 ÷ (2 × 5000) = 15 Hz per channel → 30 Hz total
+- step = 30: 10,000 × 30 ÷ (2 × 5000) = 30 Hz per channel → 60 Hz total
+
+For Exact 30Hz Total (15Hz per channel):
+
+Required step = (Desired_Freq_per_channel × 2 × Period) ÷ Timer_Frequency
+Required step = (15 × 2 × 5000) ÷ 10,000 = 15
+
+That's why step = 15 gives you exactly 30Hz!
+
+

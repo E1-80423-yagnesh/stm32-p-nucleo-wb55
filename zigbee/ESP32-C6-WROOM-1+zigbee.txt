@@ -18,7 +18,6 @@ single core RISC-V Core @ upto 160MHz
 peripherals : 2 UART, 1 LPUART, 1 SPI,1 I2C, 1 LPI2C, 1 ADC (12 bit)
 
 
-
 Radios:
 
 2.4 GHz WiFi 6
@@ -27,9 +26,6 @@ Radios:
 
 Bluetooth 5 LE
 Bluetooth 5.3 Certified
-
-
-
 
 
 Arduino IDE:
@@ -41,7 +37,7 @@ Open Arduino IDE
 Go to File > Preferences
 In "Additional Board Manager URLs, " add: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 Go to Tools > Board > Boards Manager
-Search for "esp32" and install the latest versio
+Search for "esp32" and install the latest version
 
 Tools--->Board--->Board manager--->ESP32 install
 
@@ -58,6 +54,18 @@ To upload code:
 ---> code uploaded
 
 
+
+ESP32 zigbee
+ 
+1)Tools --zigbee mode--Zigbee zczr
+
+2) Tools -- partition scheme --->zigbee zczr 4mb with spiffs (coordinator/router)
+
+3)Tools --- patition scheme ---> zigbee endpont 4 mb with spiff(enddevice)
+
+3)programmer -- ESPtool
+
+4) upload speed -- 115200
 
 
 
@@ -90,15 +98,7 @@ ESP32 Bluetooth
 --> can act as a client or as a server
   
 
-ESP32 zigbee
- 
-1)Tools --zigbee mode--Zigbee zczr
 
-2) Tools -- partition scheme --->zigbee zczr 4mb with spiffs 
-
-3)programmer -- ESPtool
-
-4) upload speed -- 115200
 
 
 
